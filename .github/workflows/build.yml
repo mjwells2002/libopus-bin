@@ -179,3 +179,59 @@ jobs:
           asset_path: .libs/libopus.dylib
           asset_name: libopus-macos-aarch64.dylib
           asset_content_type: application/octet-stream
+  build-windows-x86-64:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.2
+      - name: Clone libopus
+        uses: sudosubin/git-clone-action@v1.0.1
+        with:
+          repository: xiph/opus
+          ref: ${{ steps.get_release.outputs.name }}
+      - name: apt update
+        run: sudo apt-get update -y
+      - name: install mingw-w64
+        run: sudo apt-get install mingw-w64 -y
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --host=x86_64-w64-mingw32
+      - name: build
+        run: make 
+      - name: Upload
+        uses: actions/upload-release-asset@v1.0.2
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: .libs/librnnoise-0.dll
+          asset_name: librnnoise-windows-x86-64.dll
+          asset_content_type: application/octet-stream
+  build-windows-x86:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.2
+      - name: Clone libopus
+        uses: sudosubin/git-clone-action@v1.0.1
+        with:
+          repository: xiph/opus
+          ref: ${{ steps.get_release.outputs.name }}
+      - name: apt update
+        run: sudo apt-get update -y
+      - name: install mingw-w64
+        run: sudo apt-get install mingw-w64 -y
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --host=i686-w64-mingw32
+      - name: build
+        run: make
+      - name: Upload
+        uses: actions/upload-release-asset@v1.0.2
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: .libs/librnnoise-0.dll
+          asset_name: librnnoise-windows-x86.dll
+          asset_content_type: application/octet-stream
