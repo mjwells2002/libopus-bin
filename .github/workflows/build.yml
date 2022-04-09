@@ -11,7 +11,7 @@ env:
 
 jobs:
   build-linux-x86-64:
-    runs-on: ubuntu:20.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Get release
         id: get_release
@@ -38,7 +38,7 @@ jobs:
           asset_name: libopus-linux-x86-64.so
           asset_content_type: application/octet-stream
   build-linux-x86:
-    runs-on: ubuntu:20.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Get release
         id: get_release
@@ -65,7 +65,7 @@ jobs:
           asset_name: libopus-linux-x86.so
           asset_content_type: application/octet-stream
   build-linux-armel:
-    runs-on: ubuntu:20.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Get release
         id: get_release
@@ -96,7 +96,7 @@ jobs:
           asset_name: libopus-linux-armel.so
           asset_content_type: application/octet-stream
   build-linux-armhf:
-    runs-on: ubuntu:20.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Get release
         id: get_release
