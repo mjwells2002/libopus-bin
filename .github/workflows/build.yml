@@ -202,6 +202,8 @@ jobs:
         run: sed -i 's/D_FORTIFY_SOURCE=2/D_FORTIFY_SOURCE=2 -lssp/g' Makefile 
       - name: build
         run: make 
+      - name: list .libs files
+        run: ls -l .libs
       - name: Upload
         uses: actions/upload-release-asset@v1.0.2
         with:
