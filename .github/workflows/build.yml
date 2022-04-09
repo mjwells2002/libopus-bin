@@ -48,6 +48,10 @@ jobs:
         with:
           repository: xiph/opus
           ref: ${{ steps.get_release.outputs.name }}
+      - name: apt update
+        run: sudo apt-get update -y
+      - name: install  gcc-i686-linux-gnu
+        run: sudo apt-get install gcc-i686-linux-gnu -y
       - name: autogen
         run: |
           ./autogen.sh
@@ -122,4 +126,59 @@ jobs:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
           asset_path: .libs/libopus.so
           asset_name: libopus-linux-armhf.so
+          asset_content_type: application/octet-stream
+  build-macos-x86-64:
+    runs-on: macos-11
+    steps:
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.2
+      - name: Clone libopus
+        uses: sudosubin/git-clone-action@v1.0.1
+        with:
+          repository: xiph/opus
+          ref: ${{ steps.get_release.outputs.name }}
+      - name: install automake
+        run: brew install automake
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure
+      - name: build
+        run: make
+      - name: Upload
+        uses: actions/upload-release-asset@v1.0.2
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: .libs/libopus.dylib
+          asset_name: libopus-macos-x86-64.dylib
+          asset_content_type: application/octet-stream
+  build-macos-aarch64:
+    runs-on: macos-11
+    steps:
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.2
+      - name: Clone libopus
+        uses: sudosubin/git-clone-action@v1.0.1
+        with:
+          repository: xiph/opus
+          ref: ${{ steps.get_release.outputs.name }}
+      - name: install automake
+        run: brew install automake
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --host=aarch64-apple-darwin CFLAGS="-arch arm64"
+      - name: build
+        run: make
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.2
+      - name: Upload
+        uses: actions/upload-release-asset@v1.0.2
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: .libs/libopus.dylib
+          asset_name: libopus-macos-aarch64.dylib
           asset_content_type: application/octet-stream
