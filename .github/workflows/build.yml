@@ -198,14 +198,16 @@ jobs:
         run: ./autogen.sh
       - name: configure
         run: ./configure --host=x86_64-w64-mingw32
+      - name: update makefile add -lssp
+        run: sed -i 's/D_FORTIFY_SOURCE=2/D_FORTIFY_SOURCE=2 -lssp/g' Makefile 
       - name: build
         run: make 
       - name: Upload
         uses: actions/upload-release-asset@v1.0.2
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
-          asset_path: .libs/librnnoise-0.dll
-          asset_name: librnnoise-windows-x86-64.dll
+          asset_path: .libs/libopus-0.dll
+          asset_name: libopus-windows-x86-64.dll
           asset_content_type: application/octet-stream
   build-windows-x86:
     runs-on: ubuntu-20.04
@@ -226,12 +228,14 @@ jobs:
         run: ./autogen.sh
       - name: configure
         run: ./configure --host=i686-w64-mingw32
+      - name: update makefile add -lssp
+        run: sed -i 's/D_FORTIFY_SOURCE=2/D_FORTIFY_SOURCE=2 -lssp/g' Makefile 
       - name: build
         run: make
       - name: Upload
         uses: actions/upload-release-asset@v1.0.2
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
-          asset_path: .libs/librnnoise-0.dll
-          asset_name: librnnoise-windows-x86.dll
+          asset_path: .libs/libopus-0.dll
+          asset_name: libopus-windows-x86.dll
           asset_content_type: application/octet-stream
