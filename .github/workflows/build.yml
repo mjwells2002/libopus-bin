@@ -1,0 +1,36 @@
+name: build
+
+on:
+  release:
+    types:
+      - created
+  workflow_dispatch:
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build-linux-x86-64:
+    runs-on: ubuntu:20.04
+    steps:
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.2
+      - name: Clone libopus
+        uses: sudosubin/git-clone-action@v1.0.1
+        with:
+          repository: xiph/opus
+          ref: ${{ steps.get_release.outputs.name }}
+      - name: autogen
+        run: |
+          ./autogen.sh
+      - name: configure
+        run: |
+          ./configure
+      - name: Upload
+        uses: actions/upload-release-asset@v1.0.2
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: .libs/libopus.so
+          asset_name: libopus-linux-x86-64.so
+          asset_content_type: application/octet-stream
