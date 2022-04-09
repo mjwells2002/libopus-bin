@@ -172,9 +172,6 @@ jobs:
         run: ./configure --host=aarch64-apple-darwin CFLAGS="-arch arm64"
       - name: build
         run: make
-      - name: Get release
-        id: get_release
-        uses: bruceadams/get-release@v1.2.2
       - name: Upload
         uses: actions/upload-release-asset@v1.0.2
         with:
