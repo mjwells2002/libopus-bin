@@ -199,7 +199,7 @@ jobs:
       - name: configure
         run: ./configure --host=x86_64-w64-mingw32
       - name: update makefile add -lssp
-        run: sed -i 's/D_FORTIFY_SOURCE=2/D_FORTIFY_SOURCE=2 -lssp/g' Makefile 
+        run: sed -i 's/-D_FORTIFY_SOURCE=2/ /g' Makefile 
       - name: build
         run: make 
       - name: list .libs files
@@ -231,7 +231,7 @@ jobs:
       - name: configure
         run: ./configure --host=i686-w64-mingw32
       - name: update makefile add -lssp
-        run: sed -i 's/D_FORTIFY_SOURCE=2/D_FORTIFY_SOURCE=2 -lssp/g' Makefile 
+        run: sed -i 's/-D_FORTIFY_SOURCE=2/ /g' Makefile 
       - name: build
         run: make
       - name: Upload
