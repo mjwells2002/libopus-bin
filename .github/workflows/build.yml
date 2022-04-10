@@ -133,6 +133,34 @@ jobs:
           asset_path: .libs/libopus.so
           asset_name: libopus-linux-armhf.so
           asset_content_type: application/octet-stream
+  build-linux-aarch64:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.2
+      - name: Clone libopus
+        uses: sudosubin/git-clone-action@v1.0.1
+        with:
+          repository: xiph/opus
+          ref: ${{ steps.get_release.outputs.name }}
+      - name: apt update
+        run: sudo apt-get update -y
+      - name: install  gcc-aarch64-linux-gnu
+        run: sudo apt-get install gcc-aarch64-linux-gnu -y
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --host=aarch64-linux-gnu
+      - name: build
+        run: make
+      - name: Upload
+        uses: actions/upload-release-asset@v1.0.2
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: .libs/libopus.so
+          asset_name: libopus-linux-aarch64.so
+          asset_content_type: application/octet-stream
   build-macos-x86-64:
     runs-on: macos-11
     steps:
