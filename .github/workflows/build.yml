@@ -30,6 +30,9 @@ jobs:
       - name: make
         run: |
           make
+      - name: strip
+        run: |
+          strip .libs/libopus.so
       - name: Upload
         uses: actions/upload-release-asset@v1.0.2
         with:
@@ -61,6 +64,9 @@ jobs:
       - name: make
         run: |
           make
+      - name: strip
+        run: |
+          strip .libs/libopus.so
       - name: Upload
         uses: actions/upload-release-asset@v1.0.2
         with:
@@ -92,6 +98,9 @@ jobs:
       - name: make
         run: |
           make
+      - name: strip
+        run: |
+          strip .libs/libopus.so
       - name: Upload
         uses: actions/upload-release-asset@v1.0.2
         with:
@@ -120,6 +129,9 @@ jobs:
         run: ./configure --host=arm-linux-gnueabihf
       - name: build
         run: make
+      - name: strip
+        run: |
+          strip .libs/libopus.so
       - name: Upload
         uses: actions/upload-release-asset@v1.0.2
         with:
@@ -202,8 +214,9 @@ jobs:
         run: sed -i 's/-D_FORTIFY_SOURCE=2/ /g' Makefile 
       - name: build
         run: make 
-      - name: list .libs files
-        run: ls -l .libs
+      - name: strip
+        run: |
+          strip .libs/libopus-0.dll
       - name: Upload
         uses: actions/upload-release-asset@v1.0.2
         with:
@@ -234,6 +247,9 @@ jobs:
         run: sed -i 's/-D_FORTIFY_SOURCE=2/ /g' Makefile 
       - name: build
         run: make
+      - name: strip
+        run: |
+          strip .libs/libopus-0.dll
       - name: Upload
         uses: actions/upload-release-asset@v1.0.2
         with:
