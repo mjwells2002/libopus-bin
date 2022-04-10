@@ -98,9 +98,6 @@ jobs:
       - name: make
         run: |
           make
-      - name: strip
-        run: |
-          strip .libs/libopus.so
       - name: Upload
         uses: actions/upload-release-asset@v1.0.2
         with:
@@ -129,9 +126,6 @@ jobs:
         run: ./configure --host=arm-linux-gnueabihf
       - name: build
         run: make
-      - name: strip
-        run: |
-          strip .libs/libopus.so
       - name: Upload
         uses: actions/upload-release-asset@v1.0.2
         with:
